@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ishani Ghosh — Data Analyst Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F6F3;
+    --paper-raise:#FFFFFF;
+    --ink:#161A19;
+    --muted:#5C6360;
+    --line:#DADDD7;
+    --teal:#1F6F63;
+    --teal-deep:#154D44;
+    --amber:#D98E2B;
+    --amber-soft:#F5E3C6;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    font-size:16px;
+    line-height:1.6;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  h1,h2,h3,h4{font-family:'Fraunces',serif; margin:0; font-weight:600; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  ::selection{background:var(--amber-soft);}
+
+  /* ---------- layout shell ---------- */
+  .shell{display:flex; min-height:100vh;}
+
+  /* ---------- rail nav ---------- */
+  .rail{
+    width:220px;
+    flex-shrink:0;
+    position:sticky;
+    top:0;
+    height:100vh;
+    border-right:1px solid var(--line);
+    padding:36px 0 28px 34px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .rail-top .brand{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:19px;
+    line-height:1.15;
+  }
+  .rail-top .brand small{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:400;
+    font-size:10.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:6px;
+  }
+  .rail-nav{margin-top:52px; list-style:none; padding:0;}
+  .rail-nav li{margin-bottom:2px;}
+  .rail-nav a{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    text-decoration:none;
+    padding:9px 24px 9px 0;
+    color:var(--muted);
+    font-size:13.5px;
+    letter-spacing:.03em;
+    border-right:2px solid transparent;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .rail-nav a .tick{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--line);
+    transition:color .2s ease;
+  }
+  .rail-nav a.active, .rail-nav a:hover{color:var(--ink);}
+  .rail-nav a.active .tick{color:var(--amber);}
+  .rail-nav a.active{border-right-color:var(--teal);}
+  .rail-bottom{padding-right:24px;}
+  .rail-bottom .rail-links{display:flex; flex-direction:column; gap:8px; font-size:12.5px;}
+  .rail-bottom .rail-links a{text-decoration:none; color:var(--muted); display:flex; align-items:center; gap:7px;}
+  .rail-bottom .rail-links a:hover{color:var(--teal-deep);}
+
+  /* mobile top nav */
+  .rail-mobile{display:none;}
+
+  main{flex:1; min-width:0;}
+  section{padding:96px 64px; max-width:980px; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow .num{color:var(--amber);}
+  .eyebrow::after{content:"";flex:1; height:1px; background:var(--line);}
+
+  /* ---------- HERO / ASK ---------- */
+  #ask{padding-top:64px;}
+  .hero-top{display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap;}
+  .hero h1{font-size:clamp(38px,4.4vw,58px); line-height:1.05;}
+  .hero h1 em{font-style:italic; color:var(--teal-deep); font-weight:450;}
+  .hero .role{margin-top:18px; font-size:17px; color:var(--muted); max-width:46ch;}
+  .chart-sig{width:260px; flex-shrink:0;}
+  .chart-sig svg{width:100%; height:auto; overflow:visible;}
+  .chart-path{
+    fill:none; stroke:var(--teal); stroke-width:2.5; stroke-linecap:round;
+    stroke-dasharray:420; stroke-dashoffset:420;
+    animation:draw 1.8s ease forwards .3s;
+  }
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  .chart-dot{fill:var(--amber); opacity:0; animation:pop .3s ease forwards;}
+  .chart-dot.d1{animation-delay:.9s;}
+  .chart-dot.d2{animation-delay:1.3s;}
+  .chart-dot.d3{animation-delay:1.9s;}
+  @keyframes pop{to{opacity:1;}}
+  .chart-cap{font-family:'IBM Plex Mono',monospace; font-size:10px; fill:var(--muted);}
+
+  .about-lede{
+    font-family:'Fraunces',serif;
+    font-weight:450;
+    font-size:22px;
+    line-height:1.55;
+    max-width:66ch;
+    margin-top:52px;
+    color:var(--ink);
+  }
+  .about-lede .hl{background:linear-gradient(to top, var(--amber-soft) 42%, transparent 42%);}
+  .about-body{margin-top:22px; max-width:62ch; color:var(--muted); font-size:15.5px;}
+
+  .stat-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); margin-top:56px; border:1px solid var(--line);}
+  .stat{background:var(--paper-raise); padding:22px 20px;}
+  .stat .n{font-family:'Fraunces',serif; font-size:30px; font-weight:600; color:var(--teal-deep);}
+  .stat .l{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-top:6px;}
+
+  /* ---------- PREPARE / skills ---------- */
+  .skill-grid{display:grid; grid-template-columns:1fr 1fr; gap:36px 48px; margin-top:8px;}
+  .skill-cat h4{font-size:15px; color:var(--teal-deep); display:flex; align-items:center; gap:9px; margin-bottom:14px;}
+  .skill-cat h4::before{content:""; width:7px; height:7px; background:var(--amber); border-radius:50%; display:inline-block;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 11px;
+    border:1px solid var(--line); background:var(--paper-raise); color:var(--ink);
+    border-radius:2px;
+  }
+
+  /* ---------- PROCESS / experience ---------- */
+  .exp-card{
+    border:1px solid var(--line); background:var(--paper-raise); padding:32px 34px;
+    display:grid; grid-template-columns:180px 1fr; gap:32px;
+  }
+  .exp-meta .role{font-family:'Fraunces',serif; font-size:19px; font-weight:600;}
+  .exp-meta .org{color:var(--teal-deep); font-weight:600; margin-top:4px; font-size:14px;}
+  .exp-meta .when{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-top:10px;}
+  .exp-list{list-style:none; margin:0; padding:0;}
+  .exp-list li{position:relative; padding-left:22px; margin-bottom:14px; font-size:15px; color:var(--ink);}
+  .exp-list li::before{content:"→"; position:absolute; left:0; color:var(--amber); font-family:'IBM Plex Mono',monospace;}
+
+  .repo-strip{margin-top:36px;}
+  .repo-strip .cap{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:14px;}
+  .repo-row{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .repo{border:1px solid var(--line); padding:16px 18px; background:var(--paper-raise);}
+  .repo a{text-decoration:none; font-weight:600; font-size:14px; color:var(--ink);}
+  .repo a:hover{color:var(--teal-deep);}
+  .repo p{margin:6px 0 0; font-size:12.5px; color:var(--muted);}
+
+  /* ---------- ANALYZE / projects ---------- */
+  .project{
+    border:1px solid var(--line); background:var(--paper-raise);
+    margin-bottom:28px;
+  }
+  .project-head{
+    padding:26px 32px; border-bottom:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;
+  }
+  .project-head h3{font-size:23px;}
+  .project-head .tags{display:flex; gap:7px; flex-wrap:wrap; margin-top:12px;}
+  .tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:4px 9px; background:var(--amber-soft); color:#6B4A12; border-radius:2px;}
+  .project-link{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; white-space:nowrap;
+    text-decoration:none; border:1px solid var(--teal); color:var(--teal-deep); padding:8px 14px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .project-link:hover{background:var(--teal); color:#fff;}
+  .pap{display:grid; grid-template-columns:repeat(3,1fr);}
+  .pap > div{padding:24px 28px; border-right:1px solid var(--line);}
+  .pap > div:last-child{border-right:none;}
+  .pap .k{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.09em; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .pap .k.problem{color:#9C3D2E;}
+  .pap .k.approach{color:var(--teal-deep);}
+  .pap .k.result{color:#8A6512;}
+  .pap p{margin:0; font-size:14.5px; color:var(--ink); line-height:1.65;}
+
+  /* ---------- SHARE / certs ---------- */
+  .cert-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:8px;}
+  .cert{border:1px solid var(--line); background:var(--paper-raise); padding:26px 28px; display:flex; flex-direction:column; gap:14px;}
+  .cert.in-progress{border-style:dashed; border-color:var(--teal);}
+  .cert-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+  .cert-top h4{font-size:16.5px; line-height:1.3;}
+  .cert-issuer{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;}
+  .status{font-family:'IBM Plex Mono',monospace; font-size:10px; padding:4px 8px; border-radius:2px; white-space:nowrap; height:fit-content;}
+  .status.done{background:#E1EFEA; color:var(--teal-deep);}
+  .status.wip{background:var(--amber-soft); color:#7A5316;}
+  .cert-foot{display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:10px; border-top:1px solid var(--line);}
+  .cert-foot .date{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted);}
+  .cert-foot a{font-size:12.5px; text-decoration:none; color:var(--teal-deep); font-weight:600;}
+  .cert-foot a:hover{text-decoration:underline;}
+  .progress{height:5px; background:var(--line); border-radius:3px; overflow:hidden; margin-top:2px;}
+  .progress span{display:block; height:100%; background:var(--teal); width:11%;}
+
+  /* ---------- ACT / contact ---------- */
+  #act{border-bottom:none;}
+  .act-wrap{display:flex; justify-content:space-between; gap:50px; flex-wrap:wrap;}
+  .act-copy h2{font-size:clamp(30px,3.4vw,42px); max-width:16ch;}
+  .act-copy p{margin-top:16px; color:var(--muted); max-width:44ch; font-size:15.5px;}
+  .act-links{list-style:none; padding:0; margin:30px 0 0; display:flex; flex-direction:column; gap:4px;}
+  .act-links li a{
+    display:flex; align-items:center; justify-content:space-between;
+    text-decoration:none; padding:14px 4px; border-bottom:1px solid var(--line);
+    font-size:16px; color:var(--ink); font-weight:500;
+  }
+  .act-links li a .to{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted);}
+  .act-links li a:hover{color:var(--teal-deep);}
+  .act-links li a:hover .to{color:var(--teal-deep);}
+  .cta-box{
+    background:var(--ink); color:var(--paper); padding:36px; width:280px; flex-shrink:0;
+    display:flex; flex-direction:column; gap:16px; height:fit-content;
+  }
+  .cta-box .mono{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--amber);}
+  .cta-box p{margin:0; font-size:14px; line-height:1.6; color:#D8DAD5;}
+  .cta-box .btn{
+    background:var(--teal); color:#fff; text-align:center; padding:13px; text-decoration:none;
+    font-weight:600; font-size:14px; margin-top:6px; transition:background .15s ease;
+  }
+  .cta-box .btn:hover{background:var(--teal-deep);}
+  footer{padding:26px 64px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); display:flex; justify-content:space-between;}
+
+  @media (max-width: 900px){
+    .rail{display:none;}
+    .rail-mobile{
+      display:flex; position:sticky; top:0; z-index:20; background:var(--paper);
+      border-bottom:1px solid var(--line); padding:14px 20px; gap:16px; overflow-x:auto;
+    }
+    .rail-mobile a{
+      font-family:'IBM Plex Mono',monospace; font-size:11px; text-decoration:none; color:var(--muted);
+      white-space:nowrap; display:flex; gap:6px; align-items:baseline;
+    }
+    .rail-mobile a .tick{color:var(--amber);}
+    section{padding:56px 22px;}
+    .hero-top{flex-direction:column-reverse;}
+    .chart-sig{width:200px;}
+    .stat-strip{grid-template-columns:1fr 1fr;}
+    .skill-grid{grid-template-columns:1fr;}
+    .exp-card{grid-template-columns:1fr; gap:16px;}
+    .repo-row{grid-template-columns:1fr;}
+    .pap{grid-template-columns:1fr;}
+    .pap > div{border-right:none; border-bottom:1px solid var(--line);}
+    .cert-grid{grid-template-columns:1fr;}
+    .act-wrap{flex-direction:column;}
+    .cta-box{width:100%;}
+    footer{flex-direction:column; gap:6px; padding:22px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="rail-mobile">
+  <a href="#ask"><span class="tick">00</span>Ask</a>
+  <a href="#prepare"><span class="tick">01</span>Prepare</a>
+  <a href="#process"><span class="tick">02</span>Process</a>
+  <a href="#analyze"><span class="tick">03</span>Analyze</a>
+  <a href="#share"><span class="tick">04</span>Share</a>
+  <a href="#act"><span class="tick">05</span>Act</a>
+</nav>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-top">
+      <div class="brand">Ishani Ghosh<small>Data Analyst — Portfolio</small></div>
+      <ul class="rail-nav">
+        <li><a href="#ask"><span class="tick">00</span>Ask</a></li>
+        <li><a href="#prepare"><span class="tick">01</span>Prepare</a></li>
+        <li><a href="#process"><span class="tick">02</span>Process</a></li>
+        <li><a href="#analyze"><span class="tick">03</span>Analyze</a></li>
+        <li><a href="#share"><span class="tick">04</span>Share</a></li>
+        <li><a href="#act"><span class="tick">05</span>Act</a></li>
+      </ul>
+    </div>
+    <div class="rail-bottom">
+      <div class="rail-links">
+        <a href="https://github.com/ishani008" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/ishani-ghosh-7623b7259/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="mailto:ghoshishani008@gmail.com">Email ↗</a>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- 00 ASK -->
+    <section id="ask">
+      <div class="hero-top">
+        <div class="hero">
+          <h1>I turn raw data<br>into <em>decisions</em><br>people can act on.</h1>
+          <p class="role">Final-year Computer Science &amp; Engineering student, Heritage Institute of Technology, Kolkata — applying to the <strong>Google Data Analytics Apprenticeship</strong>.</p>
+        </div>
+        <div class="chart-sig" aria-hidden="true">
+          <svg viewBox="0 0 260 150">
+            <line x1="0" y1="130" x2="260" y2="130" stroke="#DADDD7" stroke-width="1"/>
+            <line x1="0" y1="90" x2="260" y2="90" stroke="#DADDD7" stroke-width="1" stroke-dasharray="2 4"/>
+            <line x1="0" y1="50" x2="260" y2="50" stroke="#DADDD7" stroke-width="1" stroke-dasharray="2 4"/>
+            <path class="chart-path" d="M10,120 C 60,115 80,95 110,80 C 150,60 170,55 200,35 C 220,22 235,15 250,10" />
+            <circle class="chart-dot d1" cx="110" cy="80" r="4"/>
+            <circle class="chart-dot d2" cx="200" cy="35" r="4"/>
+            <circle class="chart-dot d3" cx="250" cy="10" r="4.5"/>
+            <text class="chart-cap" x="112" y="72">AI Intern</text>
+            <text class="chart-cap" x="150" y="140">Supply-chain audit · 18k rows</text>
+            <text class="chart-cap" x="196" y="27">Published, AI-HCSST</text>
+          </svg>
+        </div>
+      </div>
+
+      <p class="about-lede">I'm <span class="hl">Ishani</span> — I like data analytics because it rewards the same instinct twice: curiosity to ask the right question, and discipline to show the answer clearly.</p>
+  0   <div class="about-body">
+        <p>My work sits at the point where a spreadsheet becomes a decision. I've audited 18,000+ rows of supply chain transactions in SQL to explain shipping delays, built a clinical screening dashboard out of raw acoustic biomarkers, and co-authored a published framework for predicting flood-triggered disease outbreaks using IoT sensor networks. Each project starts the same way — with a messy dataset and a question nobody has answered yet — and ends with something a non-technical stakeholder can actually use.</p>
+        <p>I'm currently working through the Google Data Analytics Professional Certificate, and this portfolio is structured around the same six-phase lifecycle it teaches — ask, prepare, process, analyze, share, act — because that's genuinely how I already work.</p>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat"><div class="n">7.8<span style="font-size:16px;">/10</span></div><div class="l">CGPA, B.Tech CSE</div></div>
+        <div class="stat"><div class="n">18k+</div><div class="l">Transactional rows audited</div></div>
+        <div class="stat"><div class="n">99.8%</div><div class="l">Contamination model accuracy</div></div>
+        <div class="stat"><div class="n">1</div><div class="l">Paper presented, AI-HCSST 2025</div></div>
+      </div>
+    </section>
+
+    <!-- 01 PREPARE -->
+    <section id="prepare">
+      <div class="eyebrow"><span class="num">01</span>Prepare — the toolbox</div>
+      <h2 style="font-size:30px; max-width:22ch;">Tools I reach for before the first query runs.</h2>
+      <div class="skill-grid" style="margin-top:44px;">
+        <div class="skill-cat">
+          <h4>Query &amp; warehouse</h4>
+          <div class="chips">
+            <span class="chip">SQL</span><span class="chip">Multi-table JOINs</span><span class="chip">CTEs</span>
+            <span class="chip">Window Functions</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span>
+            <span class="chip">MongoDB</span><span class="chip">Data Warehousing</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h4>Analysis &amp; modelling</h4>
+          <div class="chips">
+            <span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">NumPy</span>
+            <span class="chip">Scikit-learn</span><span class="chip">Hypothesis Testing</span><span class="chip">EDA</span>
+            <span class="chip">Java</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h4>Visualisation &amp; reporting</h4>
+          <div class="chips">
+            <span class="chip">Tableau</span><span class="chip">Power BI</span><span class="chip">Streamlit</span>
+            <span class="chip">Matplotlib</span><span class="chip">Seaborn</span><span class="chip">Excel · XLOOKUP</span>
+            <span class="chip">Google Sheets</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <h4>Method</h4>
+          <div class="chips">
+            <span class="chip">Data Cleaning</span><span class="chip">ETL Pipelines</span><span class="chip">Model Evaluation</span>
+            <span class="chip">Root-Cause Analysis</span><span class="chip">Data Storytelling</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 PROCESS -->
+    <section id="process">
+      <div class="eyebrow"><span class="num">02</span>Process — hands-on experience</div>
+      <h2 style="font-size:30px; max-width:24ch;">Cleaning, structuring, and shipping data that stakeholders trust.</h2>
+
+      <div class="exp-card" style="margin-top:40px;">
+        <div class="exp-meta">
+          <div class="role">AI Intern</div>
+          <div class="org">Ardent</div>
+          <div class="when">May – Jul 2025<br>Kolkata, India</div>
+        </div>
+        <ul class="exp-list">
+          <li>Ran end-to-end exploratory data analysis and preprocessing pipelines on raw multi-modal text datasets in Python (Pandas, NumPy) to evaluate structural patterns and distributions.</li>
+          <li>Designed and deployed interactive Streamlit dashboards, translating complex model logic and linguistic feature weights into clean, accessible views for non-technical stakeholders.</li>
+          <li>Partnered across teams to set systematic data-cleaning criteria for missing values and text anomalies — cutting latency and speeding up credibility evaluations.</li>
+        </ul>
+      </div>
+
+      <div class="repo-strip">
+        <div class="cap">Also shipped, on GitHub</div>
+        <div class="repo-row">
+          <div class="repo"><a href="https://github.com/ishani008/DeceptiNet" target="_blank" rel="noopener">DeceptiNet ↗</a><p>AI-powered fake news detection, Python.</p></div>
+          <div class="repo"><a href="https://github.com/ishani008/Email-Spam-Detection" target="_blank" rel="noopener">Email Spam Detection ↗</a><p>Naive Bayes spam classifier, Jupyter Notebook.</p></div>
+          <div class="repo"><a href="https://github.com/ishani008/Smart-Resume-Analyzer" target="_blank" rel="noopener">Smart Resume Analyzer ↗</a><p>Python resume-screening tool.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 ANALYZE -->
+    <section id="analyze">
+      <div class="eyebrow"><span class="num">03</span>Analyze — projects in depth</div>
+      <h2 style="font-size:30px; max-width:22ch;">Three problems, worked from question to recommendation.</h2>
+
+      <div style="margin-top:40px;">
+      <div class="project">
+          <div class="project-head">
+            <div>
+              <h3>Global Supply Chain Analytics &amp; Congestion Study</h3>
+              <div class="tags"><span class="tag">SQL</span><span class="tag">CTEs</span><span class="tag">Window Functions</span><span class="tag">Tableau</span><span class="tag">Excel</span></div>
+            </div>
+            <a class="project-link" href="https://github.com/ishani008/Supply-Chain-Analytics-Dashboard" target="_blank" rel="noopener">View repo ↗</a>
+          </div>
+          <div class="pap">
+            <div>
+              <div class="k problem">Problem</div>
+              <p>Transport latency was quietly eating into revenue somewhere inside a sprawling, multi-table supply chain dataset — but nobody could point to where.</p>
+            </div>
+            <div>
+              <div class="k approach">Approach</div>
+              <p>Wrote optimised SQL scripts using multi-table joins, CTEs, window functions and aggregations to extract and audit 18,000+ raw transactional rows, then ran cohort and churn analysis in SQL and Excel to isolate the bottlenecks.</p>
+            </div>
+            <div>
+              <div class="k result">Result</div>
+              <p>An interactive Tableau / Google Sheets dashboard turned shipping-lane efficiency into decision-ready recommendations, projecting the hypothetical revenue loss caused by transport delays.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <div>
+              <h3>Explainable Data Pipeline for Clinical Diagnostics</h3>
+              <div class="tags"><span class="tag">Python</span><span class="tag">SVM</span><span class="tag">Seaborn</span><span class="tag">Streamlit</span><span class="tag">Feature Engineering</span></div>
+            </div>
+            <a class="project-link" href="https://github.com/ishani008/wilson-disease-prediction" target="_blank" rel="noopener">View repo ↗</a>
+          </div>
+          <div class="pap">
+            <div>
+              <div class="k problem">Problem</div>
+              <p>High-dimensional medical and acoustic data is too noisy for a clinician to read directly — the signal for a speech impairment triage was buried in raw waveforms.</p>
+            </div>
+            <div>
+              <div class="k approach">Approach</div>
+              <p>Engineered statistical pipelines for outlier detection, missing-value imputation and automated feature selection; extracted acoustic biomarkers (MFCCs, jitter, shimmer) and mapped correlations with Seaborn and Matplotlib.</p>
+            </div>
+            <div>
+              <div class="k result">Result</div>
+              <p>An interactive Streamlit screening dashboard built around a custom health-metric index (WPI), converting multidimensional signal into an intuitive, actionable clinical report.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <div>
+              <h3>FLARE-HEALTH: AI-Driven IoT-WSN for Flood-Triggered Disease Surveillance</h3>
+              <div class="tags"><span class="tag">IoT / WSN</span><span class="tag">LSTM</span><span class="tag">Random Forest</span><span class="tag">PSO</span><span class="tag">Time Series</span></div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <a class="project-link" href="https://github.com/ishani008/AI_Driven_IoT_WSN_for_Flood_Triggered_Disease_Surveillance__Conference_Paper_Updated" target="_blank" rel="noopener">View Paper ↗</a>
+              <a class="project-link" href="https://github.com/ishani008/Certificates" target="_blank" rel="noopener">Presentation Certificate ↗</a>
+            </div>
+          </div>
+          <div class="pap">
+            <div>
+              <div class="k problem">Problem</div>
+              <p>Flood-prone regions need visibility into contamination risk before it becomes an outbreak — not after, once water and disease surveillance data has already lagged behind reality.</p>
+            </div>
+            <div>
+              <div class="k approach">Approach</div>
+              <p>Co-designed an end-to-end IoT wireless sensor network with biosensors for real-time contamination, water-level, humidity and temperature monitoring; combined Kalman filtering, exponential moving average and LSTM for flood prediction, Random Forest for contamination classification, and Particle Swarm Optimisation for sensor placement.</p>
+            </div>
+            <div>
+              <div class="k result">Result</div>
+              <p>99.8% classification accuracy for water contamination and a composite Disease Risk Index, computed via ensemble learning and presented at the International Conference on AI-HCSST 2025.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 SHARE -->
+    <section id="share">
+      <div class="eyebrow"><span class="num">04</span>Share — certifications</div>
+      <h2 style="font-size:30px; max-width:24ch;">Formal training, stacked on top of the project work.</h2>
+
+      <div class="cert-grid" style="margin-top:40px;">
+        <div class="cert in-progress">
+          <div class="cert-top">
+            <div>
+              <h4>Google Data Analytics<br>Professional Certificate</h4>
+              <div class="cert-issuer" style="margin-top:6px;">Google · via Coursera</div>
+            </div>
+            <span class="status wip">In progress</span>
+          </div>
+          <p style="font-size:13px; color:var(--muted); margin:0;">9-course series covering the full ask → prepare → process → analyze → share → act lifecycle, plus SQL, Tableau and Python.</p>
+          <div class="progress"><span></span></div>
+          <div class="cert-foot">
+            <span class="date">Started Jul 2026</span>
+            <a href="https://www.coursera.org/professional-certificates/google-data-analytics" target="_blank" rel="noopener">View programme ↗</a>
+          </div>
+        </div>
+
+        <div class="cert">
+          <div class="cert-top">
+            <div>
+              <h4>Data Analytics Job Simulation</h4>
+              <div class="cert-issuer" style="margin-top:6px;">Deloitte · via Forage</div>
+            </div>
+            <span class="status done">Completed</span>
+          </div>
+          <p style="font-size:13px; color:var(--muted); margin:0;">Practical tasks in data analysis and forensic technology.</p>
+          <div class="cert-foot">
+            <span class="date">27 Jul 2026</span>
+            <a href="https://github.com/ishani008/Certificates" target="_blank" rel="noopener">View certificate ↗</a>
+          </div>
+        </div>
+
+        <div class="cert">
+          <div class="cert-top">
+            <div>
+              <h4>Data Visualisation: Empowering Business with Effective Insights</h4>
+              <div class="cert-issuer" style="margin-top:6px;">Tata · via Forage</div>
+            </div>
+            <span class="status done">Completed</span>
+          </div>
+          <p style="font-size:13px; color:var(--muted); margin:0;">Practical tasks in framing the business scenario, choosing visuals, and communicating insight.</p>
+          <div class="cert-foot">
+            <span class="date">26 Jul 2026</span>
+            <a href="https://github.com/ishani008/Certificates" target="_blank" rel="noopener">View certificate ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 ACT -->
+    <section id="act">
+      <div class="eyebrow"><span class="num">05</span>Act — get in touch</div>
+      <div class="act-wrap" style="margin-top:20px;">
+        <div class="act-copy">
+          <h2>Let's turn your open questions into a dashboard.</h2>
+          <p>I'm looking for an apprenticeship where I can keep asking better questions at a bigger scale. Kolkata-based, happy to work remotely or relocate.</p>
+          <ul class="act-links">
+            <li><a href="mailto:ghoshishani008@gmail.com">Email<span class="to">ghoshishani008@gmail.com</span></a></li>
+            <li><a href="tel:+916289442746">Phone<span class="to">+91 62894 42746</span></a></li>
+            <li><a href="https://www.linkedin.com/in/ishani-ghosh-7623b7259/" target="_blank" rel="noopener">LinkedIn<span class="to">/in/ishani-ghosh-7623b7259 ↗</span></a></li>
+            <li><a href="https://github.com/ishani008" target="_blank" rel="noopener">GitHub<span class="to">/ishani008 ↗</span></a></li>
+          </ul>
+        </div>
+        <div class="cta-box">
+          <div class="mono">Resume</div>
+          <p>Full experience, education and skills in one PDF — same content as this page, formatted for a recruiter's inbox.</p>
+          <a class="btn" href="Ishani_Ghosh_Resume.pdf" target="_blank" rel="noopener">Download résumé</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Ishani Ghosh — Kolkata, West Bengal, India</span>
+      <span>Built for the Google Data Analytics Apprenticeship</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  const links = document.querySelectorAll('.rail-nav a');
+  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+  const setActive = () => {
+    let idx = 0;
+    const y = window.scrollY + window.innerHeight * 0.3;
+    sections.forEach((s, i) => { if (s && s.offsetTop <= y) idx = i; });
+    links.forEach((l, i) => l.classList.toggle('active', i === idx));
+  };
+  document.addEventListener('scroll', setActive, {passive:true});
+  window.addEventListener('load', setActive);
+</script>
+
+</body>
+</html>
