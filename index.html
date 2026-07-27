@@ -120,6 +120,35 @@
   .eyebrow .num{color:var(--amber);}
   .eyebrow::after{content:"";flex:1; height:1px; background:var(--line);}
 
+  /* ---------- SECTION HEADERS (00 ASK — THE CONTEXT style) ---------- */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 40px;
+    margin-bottom: 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .sec-num {
+    color: var(--amber);
+    font-weight: 600;
+  }
+
+  .sec-title {
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  .sec-line {
+    flex: 1;
+    height: 1px;
+    background-color: var(--line);
+  }
+
   /* ---------- HERO / ASK ---------- */
   #ask{padding-top:64px;}
   .hero-top{display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap;}
@@ -345,8 +374,15 @@
         </div>
       </div>
 
-      <p class="about-lede">I'm <span class="hl">Ishani</span> — I like data analytics because it rewards the same instinct twice: curiosity to ask the right question, and discipline to show the answer clearly.</p>
-  0   <div class="about-body">
+      <p class="about-lede">I'm <span class="hl">Ishani Ghosh</span> — I like data analytics because it rewards the same instinct twice: curiosity to ask the right question, and discipline to show the answer clearly.</p>
+
+      <div class="section-header">
+        <span class="sec-num">00</span>
+        <span class="sec-title">ASK — THE CONTEXT</span>
+        <div class="sec-line"></div>
+      </div>
+
+      <div class="about-body">
         <p>My work sits at the point where a spreadsheet becomes a decision. I've audited 18,000+ rows of supply chain transactions in SQL to explain shipping delays, built a clinical screening dashboard out of raw acoustic biomarkers, and co-authored a published framework for predicting flood-triggered disease outbreaks using IoT sensor networks. Each project starts the same way — with a messy dataset and a question nobody has answered yet — and ends with something a non-technical stakeholder can actually use.</p>
         <p>I'm currently working through the Google Data Analytics Professional Certificate, and this portfolio is structured around the same six-phase lifecycle it teaches — ask, prepare, process, analyze, share, act — because that's genuinely how I already work.</p>
       </div>
